@@ -1,0 +1,38 @@
+<odoo>
+
+
+    <template id="report_saleorder_document">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="web.external_layout">
+                <t t-set="address">
+                    <div t-field="doc.partner_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                    <p t-if="doc.partner_id.vat"><t t-esc="doc.company_id.country_id.vat_label or 'Tax ID'"/>: <span t-field="doc.partner_id.vat"/></p>
+                </t>
+                <h2> Sale Order</h2>
+<!--                 <div t-field="doc.partner_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' /> -->
+
+
+                <strong> Order # <span t-field="doc.name"/></strong>
+                <p> Sales person : <span t-field="doc.user_id"/></p>
+                <p>Customer : <span t-field="doc.partner_id"/></p>
+                <p>Contact : <span t-field="doc.partner_id.phone"/></p>
+                <p> Date Of Order : <span t-field="doc.date_order"/></p>
+                <p> Product Description : <span t-field="doc.order_line.product_id"/></p>
+            </t>
+        </t>
+    </t>
+    </template>
+
+
+    <template id="report_saleorder">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="sale_print.report_saleorder_document" />
+        </t>
+    </t>
+</template>
+
+</odoo>

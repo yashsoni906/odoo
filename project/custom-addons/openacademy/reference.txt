@@ -1,0 +1,17 @@
+workbook.save(fl)
+            fl.seek(0) #byteio-->fl
+            data = base64.encodestring(fl.read())
+            #return data
+
+            #data = self.get_communication_master_excel(communication_data)
+            attach_vals = {
+            'name':'%s.xls' % ('Communication Master Report'),
+            'datas':data,
+            'datas_fname':'%s.xls' % ('Communication Master Report'),
+            }
+            doc_id = self.env['ir.attachment'].create(attach_vals)
+            return {
+            'type': 'ir.actions.act_url',
+            'url':'web/content/%s?download=true' % (doc_id.id),
+            'target': 'self',
+            }

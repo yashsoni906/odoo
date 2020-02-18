@@ -1,0 +1,73 @@
+<odoo>
+
+<!--         <record model="ir.ui.view" id="sale_order_inherit">
+                <field name="name">sale.order.inherit</field>
+                <field name="model">sale.order</field>
+                <field name="inherit_id" ref="sale.view_order_form" />
+                <field name="arch" type="xml">
+                    <field name = "partner_id" position="after">
+                        <field name="oder_id"/>
+                    </field>
+                </field>
+        </record> -->
+
+
+        <record model="ir.ui.view" id="wizard_form_view">
+            <field name="name">sale.print.wizard</field>
+            <field name="model">sale_print.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Orders">
+                    <group>
+                        <field name="order_id" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button name="print_xls" string="Print Report" type="object" />
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                 </form>
+            </field>
+        </record>
+
+        <act_window id="wizard_form_view"
+                    name="Printing XLS Report"
+                    res_model="sale_print.wizard"
+                    view_mode="form"
+                    target="new"
+                    />
+
+        <menuitem id="report_sale_order_menu" name= "Sale XLSX Report" parent="sale.menu_sale_report" action="wizard_form_view" groups="group_sale_admin"/>
+
+        <!-- <menuitem id="pdf_sale_report" name = " Print PDF Report" parent="sale.menu_sale_report" action="wizard_form_view" /> -->
+
+
+<!-- 
+        <menuitem id="report_sale_order_menu" name= "Sale XLSX Report" parent="sale.sale_menu_root" action="wizard_form_view" groups="group_sale_admin"/>
+ -->
+
+
+        <record model="ir.ui.view" id="sale_order_inherit">
+                <field name="name">sale.order.inherit</field>
+                <field name="model">sale.order</field>
+                <field name="inherit_id" ref="sale.view_order_form" />
+                <field name="arch" type="xml">
+                    <xpath expr="/form/sheet/notebook/page//field[@name='user_id']" position="replace">
+                    </xpath>
+                    <xpath expr = "//field[@name='payment_term_id']" position="after">
+                        <field name="user_id"/>
+                    </xpath>
+
+                    <xpath expr="/form/sheet/notebook/page[@name='other_information']//field[@name='client_order_ref']" position="replace">
+                    </xpath>
+                    <xpath expr = "/form/sheet/notebook/page[@name='other_information']//field[@name='invoice_status']" position="after">
+                        <field name="client_order_ref"/>
+                    </xpath>
+
+                </field>
+        </record>
+
+</odoo>
+
+
+<!-- <xpath expr="//field[@name='partner_id']" position="attributes">
+       <attribute name="invisible">1</attribute>
+</xpath> -->
